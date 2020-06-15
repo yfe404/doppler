@@ -1,0 +1,29 @@
+#!/bin/bash
+
+notify-send "Loading Doppler Radar..." "Please wait a moment..."
+
+CACHE=${USER}/.cache/doppler
+mkdir -p $CACHE
+
+rm $CACHE/doppler.gif
+#rf -rf ./out
+
+tsp -S $(nproc)
+
+tsp wget "https://static-media.meteonews.net/maps/900x750_c1/bgmap_frQuad.png" -O background.png
+tsp wget "http://media.meteonews.net/radar/frQuad_900x750_c1/radar_20200615_1345.png"
+tsp wget "http://media.meteonews.net/radar/frQuad_900x750_c1/radar_20200615_1400.png"
+tsp wget "http://media.meteonews.net/radar/frQuad_900x750_c1/radar_20200615_1415.png"
+tsp wget "http://media.meteonews.net/radar/frQuad_900x750_c1/radar_20200615_1430.png"
+tsp wget "http://media.meteonews.net/radar/frQuad_900x750_c1/radar_20200615_1445.png"
+tsp wget "http://media.meteonews.net/radar/frQuad_900x750_c1/radar_20200615_1500.png"
+tsp wget "http://media.meteonews.net/radar/frQuad_900x750_c1/radar_20200615_1545.png"
+tsp wget "http://media.meteonews.net/radar/frQuad_900x750_c1/radar_20200615_1600.png"
+
+tsp -w
+
+mogrify -path out -format png -draw 'image Dst_Over 0,0 0,0 "background.png"' *.png
+
+convert out/radar*png $CACHE/doppler.gif
+
+mpv --loop-file=inf $CACHE/doppler.gif
