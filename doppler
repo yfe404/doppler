@@ -8,6 +8,7 @@ mkdir -p $CACHE
 rm $CACHE/doppler.gif
 #rf -rf ./out
 
+tsp -C # clear queue
 tsp -S $(nproc)
 
 tsp wget "https://static-media.meteonews.net/maps/900x750_c1/bgmap_frQuad.png" -O background.png
