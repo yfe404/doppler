@@ -8,4 +8,11 @@
 - mpv
 
 
+## Usage
+
+``` bash
+chmod +x doppler
+./doppler
+```
+
 
